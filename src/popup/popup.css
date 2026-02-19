@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 380px;
+  margin: 0;
+  padding: 12px;
+  background: #f8f9fb;
+}
+
+h1 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.help {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.45;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+#transformBtn {
+  grid-column: 1 / span 2;
+  background: #0f766e;
+}
+
+#loadSampleBtn {
+  background: #6b7280;
+}
+
+#status {
+  font-size: 12px;
+  margin: 10px 0 0;
+  min-height: 16px;
+}
