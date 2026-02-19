@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIURank Autofill</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <h1>PIURank Autofill</h1>
+      <p class="help">
+        piu-db/수집 결과(JSON 배열)를 붙여넣어 저장하세요.<br />
+        대상 페이지: <code>https://piurank.com/playinfo/write</code>
+      </p>
+      <textarea id="recordsInput" placeholder='[{"songTitle":"...","chartType":"Single","level":17,"score":999999,"perfect":1200}]'></textarea>
+      <div class="actions">
+        <button id="saveBtn">저장</button>
+        <button id="loadSampleBtn" type="button">샘플 넣기</button>
+      </div>
+      <p id="status"></p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
