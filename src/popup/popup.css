@@ -31,8 +31,7 @@ textarea {
 }
 
 .actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 8px;
   margin-top: 10px;
 }
@@ -46,12 +45,7 @@ button {
   cursor: pointer;
 }
 
-#transformBtn {
-  grid-column: 1 / span 2;
-  background: #0f766e;
-}
-
-#loadSampleBtn {
+button[type='button'] {
   background: #6b7280;
 }
 
