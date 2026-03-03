@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  width: 360px;
+  width: 380px;
   margin: 0;
   padding: 12px;
   background: #f8f9fb;
@@ -15,11 +15,12 @@ h1 {
   margin: 0 0 10px;
   font-size: 12px;
   color: #4b5563;
+  line-height: 1.45;
 }
 
 textarea {
   width: 100%;
-  min-height: 160px;
+  min-height: 180px;
   resize: vertical;
   box-sizing: border-box;
   padding: 8px;
