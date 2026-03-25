@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "PIURank Autofill Helper",
-  "version": "0.1.0",
-  "description": "PIUGame recent records data를 PIURank 입력 폼에 자동 반영하는 보조 확장 프로그램",
-  "permissions": ["storage", "activeTab", "scripting"],
+  "version": "0.2.0",
+  "description": "PIUGame recent records를 수집해 PIURank 입력 폼에 자동 반영하는 확장 프로그램",
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "host_permissions": [
     "https://piurank.com/*",
     "https://www.piurank.com/*",
@@ -22,6 +22,11 @@
     {
       "matches": ["https://piurank.com/*", "https://www.piurank.com/*"],
       "js": ["src/content/autofill.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://piugame.com/*", "https://www.piugame.com/*"],
+      "js": ["src/content/piugame-extractor.js"],
       "run_at": "document_idle"
     }
   ]

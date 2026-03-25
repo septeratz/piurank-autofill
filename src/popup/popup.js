@@ -3,6 +3,7 @@ const statusEl = document.getElementById('status');
 const saveBtn = document.getElementById('saveBtn');
 const loadSampleBtn = document.getElementById('loadSampleBtn');
 const transformBtn = document.getElementById('transformBtn');
+const importFromTabBtn = document.getElementById('importFromTabBtn');
 
 loadCurrent();
 
@@ -12,11 +13,22 @@ saveBtn.addEventListener('click', async () => {
     const response = await sendMessage({ type: 'SAVE_RECORDS', payload: parsed });
     if (!response?.ok) throw new Error('저장 실패');
 
-    statusEl.textContent = `${response.count}개 기록을 저장했습니다.`;
-    statusEl.style.color = '#166534';
+    setStatus(`${response.count}개 기록을 저장했습니다.`, true);
   } catch (error) {
-    statusEl.textContent = error.message;
-    statusEl.style.color = '#b91c1c';
+    setStatus(error.message, false);
+  }
+});
+
+importFromTabBtn.addEventListener('click', async () => {
+  try {
+    setStatus('piugame 탭에서 기록 추출 중...', true);
+    const response = await sendMessage({ type: 'IMPORT_FROM_PIUGAME_TAB' });
+    if (!response?.ok) throw new Error(response?.error ?? '가져오기 실패');
+
+    inputEl.value = JSON.stringify(response.records.map((v) => v.sourceRaw ?? v), null, 2);
+    setStatus(`${response.count}개 기록을 piugame 탭에서 가져왔습니다.`, true);
+  } catch (error) {
+    setStatus(error.message, false);
   }
 });
 
@@ -26,11 +38,9 @@ transformBtn.addEventListener('click', () => {
     const transformed = parsed.map(transformPiugameRecord);
 
     inputEl.value = JSON.stringify(transformed, null, 2);
-    statusEl.textContent = `${transformed.length}개 항목을 piurank 입력용으로 변환했습니다.`;
-    statusEl.style.color = '#166534';
+    setStatus(`${transformed.length}개 항목을 piurank 입력용으로 변환했습니다.`, true);
   } catch (error) {
-    statusEl.textContent = error.message;
-    statusEl.style.color = '#b91c1c';
+    setStatus(error.message, false);
   }
 });
 
@@ -114,6 +124,11 @@ function extractLevel(modeLevelRaw) {
 
 function str(value) {
   return value === undefined || value === null ? '' : String(value);
+}
+
+function setStatus(message, ok) {
+  statusEl.textContent = message;
+  statusEl.style.color = ok ? '#166534' : '#b91c1c';
 }
 
 function sendMessage(message) {

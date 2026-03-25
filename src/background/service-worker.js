@@ -25,7 +25,39 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     });
     return true;
   }
+
+  if (message.type === 'IMPORT_FROM_PIUGAME_TAB') {
+    importFromPiugameTab()
+      .then((result) => sendResponse(result))
+      .catch((error) => sendResponse({ ok: false, error: error.message }));
+    return true;
+  }
 });
+
+async function importFromPiugameTab() {
+  const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!activeTab?.id || !activeTab.url) {
+    return { ok: false, error: '활성 탭을 찾지 못했습니다.' };
+  }
+
+  const isPiugame = /https:\/\/(www\.)?piugame\.com\//.test(activeTab.url);
+  if (!isPiugame) {
+    return { ok: false, error: '활성 탭이 piugame.com이 아닙니다.' };
+  }
+
+  const response = await chrome.tabs.sendMessage(activeTab.id, { type: 'EXTRACT_PIUGAME_RECORDS' });
+  if (!response?.ok) {
+    return { ok: false, error: response?.error ?? 'piugame 기록 추출 실패' };
+  }
+
+  const normalized = normalizeRecords(response.records ?? []);
+  if (!normalized.length) {
+    return { ok: false, error: '추출된 기록이 없습니다. 최근기록 페이지인지 확인해주세요.' };
+  }
+
+  await chrome.storage.local.set({ [STORAGE_KEY]: normalized });
+  return { ok: true, count: normalized.length, records: normalized };
+}
 
 function normalizeRecords(records) {
   return records
